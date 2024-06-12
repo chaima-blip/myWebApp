@@ -1,0 +1,35 @@
+<div class="sign-up">
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        <p style="font-size: 60px;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Sign Up</p>
+      </div>
+      <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+          <div class="card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <div class="card-header text-white" style="background-color: #344C64;">
+              <h3 class="card-title">Create Account</h3>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="signup(signupForm)" #signupForm="ngForm">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="name">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" class="form-control" id="email" name="email" required [(ngModel)]="email">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password:</label>
+                  <input type="password" class="form-control" id="password" name="password" required [(ngModel)]="password">
+                </div>
+                <button type="submit" class="btn b btn-block">Sign Up</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  `
+  

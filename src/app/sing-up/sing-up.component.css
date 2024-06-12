@@ -1,14 +1,13 @@
-
-.container {
-    margin-top: 50px;
-    
-  }
-  .log-in   {
+.sign-up {
     background: linear-gradient(135deg, #7f9ac2, #9cd9f3); /* Gradient background */
     min-height: 100vh; /* Full viewport height */
     display: flex;
     
     justify-content: center;
+  }
+  
+  .container {
+    margin-top: 50px;
   }
   
   .card {
@@ -18,13 +17,11 @@
   
   .card-header {
     border-bottom: none;
-     border-top-left-radius: 13px; 
+    border-top-left-radius: 13px; 
     border-top-right-radius: 13px; 
-
   }
   
   .b {
-
     border-radius: 10px;
     background-color: #647ea8;
     border-color: #9e8156;
@@ -33,7 +30,6 @@
   
   .b:hover {
     background-color: #57A6A1;
-  border-color: #efeeee;
-
+    border-color: #efeeee;
   }
   
