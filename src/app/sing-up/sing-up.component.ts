@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../user.service';
-
+import { Router } from '@angular/router'; // Import Router
+import { HomeComponent } from '../home/home.component';
 @Component({
   selector: 'app-sing-up',
   templateUrl: './sing-up.component.html',
@@ -11,20 +12,32 @@ export class SingUpComponent {
   name: string = '';
   email: string = '';
   password: string = '';
+  constructor(private userService: UserService ,private router: Router) {}
 
   signup(signupForm: NgForm) {
-    if (signupForm.valid) {
-      // Logic to handle sign-up (e.g., send data to server)
-      console.log('Sign up successful!');
-      console.log('Name:', this.name);
-      console.log('Email:', this.email);
-      console.log('Password:', this.password);
-
-      // Reset form fields
-      signupForm.resetForm();
-    } else {
-      console.error('Form is invalid. Please fill in all fields.');
-    }
+  if (signupForm.valid) {
+    this.userService.signup(this.name, this.email, this.password).subscribe(
+      (response) => {
+        console.log('Sign up successful!', response);
+        this.userService.setUserEmail(this.email);
+        this.router.navigate(['/home']); 
+        
+      },
+      (error) => {
+        console.error('Sign up failed:', error);
+        if (error.status === 400 && error.error.email) {
+          // Handle specific validation error (e.g., email already exists)
+          alert('Email already exists. Please use a different email.');
+        } else {
+          // Handle other errors or generic message
+          alert('Failed to sign up. Please try again later.');
+        }
+      }
+    );
+  } else {
+    console.error('Form is invalid. Please fill in all fields.');
   }
+}
+
 
 }
