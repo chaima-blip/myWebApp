@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-sing-up',
