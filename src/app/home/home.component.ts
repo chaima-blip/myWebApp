@@ -33,11 +33,11 @@ ngModel: any;
 
   constructor(private http: HttpClient,private el: ElementRef,
     private renderer: Renderer2, private fb: FormBuilder, private router: Router,private userService: UserService) {
-    this.userForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['********', Validators.required] // Placeholder
-    });
+      this.userForm = this.fb.group({
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['********', Validators.required] // Placeholder
+      });
   }
 
   ngOnInit(): void {
@@ -59,9 +59,10 @@ ngModel: any;
         },
         (error: any) => {
           console.error('Error fetching user details:', error);
-          this.router.navigate(['/login']);
+          this.router.navigate(['/Login']);
         }
       );
+    
     } /*else {
       console.error('No user email found. Please log in.');
       this.router.navigate(['/login']);
@@ -71,57 +72,35 @@ name: string = '';
   email: string = '';
   password: string = '';
 
-  
-  saveChanges(): void { 
-    console.log('Name:', this.name);
-    console.log('Email:', this.email);
-    console.log('Password:', this.password);
-    const updatedUserData: any = {};
-
-    // Add name if not empty
-    if (this.name.trim() !== '') {
-      updatedUserData.name = this.name.trim();
-    }
-
-    // Add email if not empty
-    if (this.email.trim() !== '') {
-      updatedUserData.email = this.email.trim();
-    }
-
-    // Add password if not empty
-    if (this.password.trim() !== '') {
-      updatedUserData.password = this.password.trim();
-    }
-
-    // Get the original email from the user service
-
-    console.log('Updated User Data:', updatedUserData);
-
-    // Call updateUser method with original email and updatedUserData if there's any data to update
-      // Call updateUser method with original email and updatedUserData if there's any data to update
-      const originalEmail = localStorage.getItem('originalEmail');
+  saveChanges(): void {
+    if (this.userForm.valid) {
+      const updatedUserData: User = {
+        name: this.userForm.get('name')?.value,
+        email: this.userForm.get('email')?.value,
+        password: this.userForm.get('password')?.value !== '********' ? this.userForm.get('password')?.value : undefined
+      };
+      const originalEmail = this.userService.getUserEmail();
       if (originalEmail) {
         this.userService.updateUser(originalEmail, updatedUserData).subscribe(
           () => {
             console.log('User information updated successfully');
-            this.userService.setUserEmail(updatedUserData.email); // Update userEmail in UserService
-            this.closeModal('yourModalId'); // Close modal after successful update
-            localStorage.setItem('originalEmail', updatedUserData.email); // Update originalEmail in localStorage
-          
-          window.location.reload(); 
-          // Optionally update local state or display success message
-        },
-        (error: any) => {
-          console.error('Error updating user information:', error);
-          // Handle error, display error message, etc.
-        }
-      );
-    } else {
-      console.warn('No fields to update or user email not found.');
+            if (updatedUserData.email) {
+              this.userService.setUserEmail(updatedUserData.email);
+              this.originalEmail = updatedUserData.email;
+            }
+            this.user = { ...updatedUserData, password: '********' }; // Reset password field
+            this.userForm.patchValue(this.user); // Update the form with the new data
+            window.location.reload();
+          },
+          (error: any) => {
+            console.error('Error updating user information:', error);
+          }
+        );
+      } else {
+        console.warn('User email not found.');
+      }
     }
   }
-
-
   
 
 

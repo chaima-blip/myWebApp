@@ -27,6 +27,7 @@ export class LogInComponent {
         // Handle login error
         console.error('Login failed', error);
         alert('Login failed')
+        window.location.reload(); 
       }
     );
   }
