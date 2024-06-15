@@ -141,4 +141,9 @@ name: string = '';
       }
     }
   }
+  logout(): void {
+    this.userService.logout();
+    alert('You have successfully logged out.');
+    this.router.navigate(['/Login']);
+  }
 }

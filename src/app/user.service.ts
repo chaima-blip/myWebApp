@@ -18,6 +18,10 @@ export class UserService {
     const url = `${this.baseUrl}update/${originalEmail}/`;
     return this.http.put(url, updatedUserData);
   }
+  logout(): void {
+    this.clearLoggedInUser();
+    this.clearUserEmail();
+  }
 
   
   private user: User | null = null; // Store user data
