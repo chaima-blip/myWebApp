@@ -40,16 +40,16 @@
                       <ul class="list-group">
                           <li class="list-group-item">
                               <label for="name1">Name</label>
-                              <input id="name1" formControlName="name" class="form-control" readonly />
-                          </li>
-                          <li class="list-group-item">
+                              <input id="name1" type="text"  [(ngModel)]="name" [ngModelOptions]="{standalone: true}" class="form-control" />
+                            </li>
+                            <li class="list-group-item">
                               <label for="email1">Email</label>
-                              <input id="email1" formControlName="email" class="form-control" readonly />
-                          </li>
-                          <li class="list-group-item">
+                              <input id="email1" type="email" [(ngModel)]="email"  [ngModelOptions]="{standalone: true}" class="form-control" />
+                            </li>
+                            <li class="list-group-item">
                               <label for="password1">Password</label>
-                              <input id="password1" formControlName="password" type="password" class="form-control" readonly />
-                          </li>
+                              <input id="password1" type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control" />
+                            </li>
                       </ul>
                   </form>
               </div>

@@ -15,29 +15,27 @@ export class SingUpComponent {
   constructor(private userService: UserService ,private router: Router) {}
 
   signup(signupForm: NgForm) {
-  if (signupForm.valid) {
-    this.userService.signup(this.name, this.email, this.password).subscribe(
-      (response) => {
-        console.log('Sign up successful!', response);
-        this.userService.setUserEmail(this.email);
-        this.router.navigate(['/home']); 
-        
-      },
-      (error) => {
-        console.error('Sign up failed:', error);
-        if (error.status === 400 && error.error.email) {
-          // Handle specific validation error (e.g., email already exists)
-          alert('Email already exists. Please use a different email.');
-        } else {
-          // Handle other errors or generic message
-          alert('Failed to sign up. Please try again later.');
+    if (signupForm.valid) {
+      this.userService.signup(this.name, this.email, this.password).subscribe(
+        (response) => {
+          console.log('Sign up successful!', response);
+          this.userService.setUserEmail(this.email); // Update userEmail after successful signup
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          console.error('Sign up failed:', error);
+          if (error.status === 400 && error.error.email) {
+            alert('Email already exists. Please use a different email.');
+          } else {
+            alert('Failed to sign up. Please try again later.');
+          }
         }
-      }
-    );
-  } else {
-    console.error('Form is invalid. Please fill in all fields.');
+      );
+    } else {
+      console.error('Form is invalid. Please fill in all fields.');
+      alert('Form is invalid. Please fill in all fields.');
+    }
   }
-}
 
 
 }
